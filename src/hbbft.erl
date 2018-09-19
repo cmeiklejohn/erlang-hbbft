@@ -151,7 +151,7 @@ next_round(Data = #hbbft_data{secret_key=SK, n=N, f=F, j=J}) ->
                               acs_init=false, acs_results=[],
                               sent_txns=false, sent_sig=false,
                               dec_shares=#{}, decrypted=#{},
-                              sig_shares=#{}, thingtosign=undefined},
+                              sig_shares=#{}, thingtosign=undefined, stamps=[]},
     maybe_start_acs(NewData).
 
 -spec next_round(hbbft_data(), [binary()]) -> {hbbft_data(), ok | {send, []}}.
@@ -165,7 +165,7 @@ next_round(Data = #hbbft_data{secret_key=SK, n=N, f=F, j=J, buf=Buf}, Transactio
                               acs_init=false, acs_results=[],
                               sent_txns=false, sent_sig=false,
                               dec_shares=#{}, decrypted=#{}, buf=NewBuf,
-                              sig_shares=#{}, thingtosign=undefined},
+                              sig_shares=#{}, thingtosign=undefined, stamps=[]},
     maybe_start_acs(NewData).
 
 -spec round(hbbft_data()) -> non_neg_integer().
