@@ -228,12 +228,13 @@ handle_msg(Data = #hbbft_data{round=R}, J, {dec, R, I, Share}) ->
                                     %% we did it!
                                     %% Combine all unique messages into a single list
                                     TransactionsThisRound = lists:usort(lists:flatten(maps:values(NewDecrypted))),
+                                    StampsThisRound = lists:usort(Stamps),
                                     %% return the transactions we agreed on to the user
                                     %% we have no idea which transactions are valid, invalid, out of order or missing
                                     %% causal context (eg. a nonce is not monotonic) so we return them to the user to let them
                                     %% figure it out. We expect the user to call finalize_round/3 once they've decided what they want to accept
                                     %% from this set of transactions.
-                                    {Data#hbbft_data{dec_shares=NewShares, decrypted=NewDecrypted, stamps=Stamps, sent_txns=true}, {result, {transactions, Stamps, TransactionsThisRound}}};
+                                    {Data#hbbft_data{dec_shares=NewShares, decrypted=NewDecrypted, stamps=Stamps, sent_txns=true}, {result, {transactions, StampsThisRound, TransactionsThisRound}}};
                                 false ->
                                     {Data#hbbft_data{dec_shares=NewShares, decrypted=NewDecrypted, stamps=Stamps}, ok}
                             end
