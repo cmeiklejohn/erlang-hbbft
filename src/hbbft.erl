@@ -223,7 +223,7 @@ handle_msg(Data = #hbbft_data{round=R}, J, {dec, R, I, Share}) ->
                             NewDecrypted = maps:put(I, binary_to_term(Decrypted), Data#hbbft_data.decrypted),
                             {Stamp, Transactions} = binary_to_term(Decrypted),
                             NewDecrypted = maps:put(I, Transactions, Data#hbbft_data.decrypted),
-                            Stamps = [Stamp | Data#hbbft_data.stamps],
+                            Stamps = [{I, Stamp} | Data#hbbft_data.stamps],
                             case maps:size(NewDecrypted) == length(Data#hbbft_data.acs_results) andalso not Data#hbbft_data.sent_txns of
                                 true ->
                                     %% we did it!
