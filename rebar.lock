@@ -1,5 +1,6 @@
 {"1.1.0",
-[{<<"erasure">>,
+[{<<"acceptor_pool">>,{pkg,<<"acceptor_pool">>,<<"1.0.0-rc.0">>},1},
+ {<<"erasure">>,
   {git,"https://github.com/helium/erlang-erasure.git",
        {ref,"ec0eeee8afecb9e20b290c00a944cdba57f0dbf8"}},
   0},
@@ -11,8 +12,27 @@
   {git,"https://github.com/helium/erlang_tpke.git",
        {ref,"20e18381060a0d0ee88475493f7244d7dbc9ffad"}},
   0},
- {<<"merkerl">>,{pkg,<<"merkerl">>,<<"1.0.1">>},0}]}.
+ {<<"goldrush">>,{pkg,<<"goldrush">>,<<"0.1.9">>},2},
+ {<<"lager">>,{pkg,<<"lager">>,<<"3.5.1">>},1},
+ {<<"merkerl">>,{pkg,<<"merkerl">>,<<"1.0.1">>},0},
+ {<<"partisan">>,
+  {git,"https://github.com/lasp-lang/partisan.git",
+       {ref,"b23eec22d05dfcf01d079da95deb12543069d502"}},
+  0},
+ {<<"quickrand">>,{pkg,<<"quickrand">>,<<"1.7.4-rc1">>},2},
+ {<<"rand_compat">>,{pkg,<<"rand_compat">>,<<"0.0.3">>},1},
+ {<<"time_compat">>,{pkg,<<"time_compat">>,<<"0.0.1">>},1},
+ {<<"types">>,{pkg,<<"types">>,<<"0.1.6">>},1},
+ {<<"uuid">>,{pkg,<<"uuid_erl">>,<<"1.7.3">>},1}]}.
 [
 {pkg_hash,[
- {<<"merkerl">>, <<"FFFA7591CB3C62E837533A1C71B3C3795194FC3E09541E25369F1C87AF38EFE1">>}]}
+ {<<"acceptor_pool">>, <<"679D741DF87FC13599B1AEF2DF8F78F1F880449A6BEFAB7C44FB6FAE0E92A2DE">>},
+ {<<"goldrush">>, <<"F06E5D5F1277DA5C413E84D5A2924174182FB108DABB39D5EC548B27424CD106">>},
+ {<<"lager">>, <<"63897A61AF646C59BB928FEE9756CE8BDD02D5A1A2F3551D4A5E38386C2CC071">>},
+ {<<"merkerl">>, <<"FFFA7591CB3C62E837533A1C71B3C3795194FC3E09541E25369F1C87AF38EFE1">>},
+ {<<"quickrand">>, <<"61A9AF693C8B4FC9F838818493BCEE127AA2EE70483BE32BAD20C760C208E8BA">>},
+ {<<"rand_compat">>, <<"011646BC1F0B0C432FE101B816F25B9BBB74A085713CEE1DAFD2D62E9415EAD3">>},
+ {<<"time_compat">>, <<"23FE0AD1FDF3B5B88821B2D04B4B5E865BF587AE66056D671FE0F53514ED8139">>},
+ {<<"types">>, <<"03BB7140016C896D3441A77CB0B7D6ACAA583D6D6E9C4A3E1FD3C25123710290">>},
+ {<<"uuid">>, <<"C5DF97D1A3D626235C2415E74053C47B2138BB863C5CD802AB5CAECB8ECC019F">>}]}
 ].

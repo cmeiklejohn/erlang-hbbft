@@ -40,6 +40,22 @@ init_per_testcase(TestCase, Config) ->
 
     _ = [hbbft_ct_utils:connect(Node) || Node <- NodeNames],
 
+    %% Load partisan.
+    lists:foreach(fun(Node) ->
+            ct:pal("Loading partisan on node: ~p", [Node]),
+            ok = rpc:call(Node, application, load, [partisan])
+        end, Nodes),
+
+    %% TODO: Configure partisan.
+
+    %% Start partisan.
+    lists:foreach(fun(Node) ->
+            ct:pal("Starting partisan on node: ~p", [Node]),
+            {ok, _} = rpc:call(Node, application, ensure_all_started, [partisan])
+        end, Nodes),
+
+    %% TODO: Cluster nodes.
+
     {ok, _} = ct_cover:add_nodes(Nodes),
     [{nodes, Nodes} | Config].
 
