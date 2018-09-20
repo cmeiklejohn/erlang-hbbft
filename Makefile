@@ -17,3 +17,5 @@ test: compile
 typecheck:
 	$(REBAR) dialyzer
 
+partisan:
+	clear; pkill beam.smp; $(REBAR) ct --suite=hbbft_distributed_SUITE --readable=false -v
