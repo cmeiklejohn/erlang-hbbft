@@ -17,5 +17,16 @@ test: compile
 typecheck:
 	$(REBAR) dialyzer
 
+## Development targets.
+
 partisan:
-	clear; pkill beam.smp; $(REBAR) ct --suite=hbbft_distributed_SUITE --readable=false -v
+	rm -rf _build/test/logs; clear; pkill beam.smp; $(REBAR) ct --suite=hbbft_distributed_SUITE --case=simple_test --readable=false -v
+
+partisan-logs:
+	find _build/test/logs -name "console.log" | xargs cat
+
+partisan-clone:
+	git clone http://github.com/lasp-lang/partisan.git _checkouts/partisan
+
+dos2unix:
+	find . -type f | xargs dos2unix
