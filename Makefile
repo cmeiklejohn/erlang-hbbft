@@ -26,7 +26,7 @@ partisan-logs:
 	find _build/test/logs -name "console.log" | xargs cat
 
 partisan-clone:
-	git clone http://github.com/lasp-lang/partisan.git _checkouts/partisan
+	git clone http://github.com/lasp-lang/partisan.git _checkouts/partisan -b randomize-jitter
 
 dos2unix:
 	find . -type f | xargs dos2unix
