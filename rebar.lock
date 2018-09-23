@@ -17,7 +17,7 @@
  {<<"merkerl">>,{pkg,<<"merkerl">>,<<"1.0.1">>},0},
  {<<"partisan">>,
   {git,"https://github.com/lasp-lang/partisan.git",
-       {ref,"b23eec22d05dfcf01d079da95deb12543069d502"}},
+       {ref,"94c866bc3f6968fd88ceb1eb25b4c96a2089ebdb"}},
   0},
  {<<"quickrand">>,{pkg,<<"quickrand">>,<<"1.7.4-rc1">>},2},
  {<<"rand_compat">>,{pkg,<<"rand_compat">>,<<"0.0.3">>},1},
