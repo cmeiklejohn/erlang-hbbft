@@ -46,7 +46,11 @@ init_per_testcase(TestCase, Config) ->
             ok = rpc:call(Node, application, load, [partisan])
         end, Nodes),
 
-    %% TODO: Configure partisan.
+    %% Configure partisan.
+    lists:foreach(fun(Node) ->
+            ct:pal("Configuring partisan on node: ~p", [Node]),
+            ok = rpc:call(Node, partisan_config, set, [channels, [undefined]])
+        end, Nodes),
 
     %% Start partisan.
     lists:foreach(fun(Node) ->
@@ -54,7 +58,19 @@ init_per_testcase(TestCase, Config) ->
             {ok, _} = rpc:call(Node, application, ensure_all_started, [partisan])
         end, Nodes),
 
-    %% TODO: Cluster nodes.
+    %% Cluster nodes.
+    [FirstNode | OtherNodes] = Nodes,
+    lists:foreach(fun(Node) ->
+        Endpoint = rpc:call(Node, partisan_peer_service_manager, myself, []),
+        ct:pal("~p is connecting to ~p with endpoint ~p", [FirstNode, Node, Endpoint]),
+        JoinResult = rpc:call(FirstNode, partisan_peer_service, sync_join, [Endpoint]),
+        ct:pal("Result of join: ~p", [JoinResult]),
+
+        NodeMembers = rpc:call(Node, partisan_peer_service, members, []),
+        ct:pal("~p members: ~p", [Node, NodeMembers]),
+        FirstNodeMembers = rpc:call(FirstNode, partisan_peer_service, members, []),
+        ct:pal("~p members: ~p", [FirstNode, FirstNodeMembers])
+        end, OtherNodes),
 
     {ok, _} = ct_cover:add_nodes(Nodes),
     [{nodes, Nodes} | Config].
