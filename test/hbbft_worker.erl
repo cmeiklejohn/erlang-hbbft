@@ -149,7 +149,7 @@ dispatch({NewHBBFT, {result, {transactions, Txns}}}, State) ->
     dispatch(hbbft:finalize_round(maybe_deserialize_hbbft(NewHBBFT, State#state.sk), Txns, term_to_binary(NewBlock)), State#state{tempblock=NewBlock});
 dispatch({NewHBBFT, {result, {signature, Sig}}}, State = #state{tempblock=NewBlock0}) ->
     NewBlock = NewBlock0#block{signature=Sig},
-    [ gen_server:cast({global, name(Dest)}, {block, NewBlock}) || Dest <- lists:seq(0, State#state.n - 1)],
+    [ global_cast(Dest, {block, NewBlock}) || Dest <- lists:seq(0, State#state.n - 1)],
     dispatch(hbbft:next_round(maybe_deserialize_hbbft(NewHBBFT, State#state.sk)), State#state{blocks=[NewBlock|State#state.blocks], tempblock=undefined});
 dispatch({NewHBBFT, ok}, State) ->
     State#state{hbbft=maybe_serialize_HBBFT(NewHBBFT, State#state.to_serialize)};
@@ -192,4 +192,8 @@ maybe_serialize_HBBFT(HBBFT, ToSerialize) ->
     end.
 
 global_cast(Destination, Message) ->
-    gen_server:cast({global, name(Destination)}, Message).
+    Name = name(Destination),
+    Pid = global:whereis_name(Name),
+    Node = node(Pid),
+    partisan_peer_service:cast_message(Node, {global, Name}, Message).
+    %% gen_server:cast({global, name(Destination)}, Message).
