@@ -164,11 +164,11 @@ do_send([], _) ->
     ok;
 do_send([{unicast, Dest, Msg}|T], State) ->
     io:format("~p unicasting ~p to ~p~n", [State#state.id, Msg, global:whereis_name(name(Dest))]),
-    gen_server:cast({global, name(Dest)}, {hbbft, State#state.id, Msg}),
+    global_cast(Dest, {hbbft, State#state.id, Msg}),
     do_send(T, State);
 do_send([{multicast, Msg}|T], State) ->
     io:format("~p multicasting ~p to ~p~n", [State#state.id, Msg, [global:whereis_name(name(Dest)) || Dest <- lists:seq(0, State#state.n - 1)]]),
-    [ gen_server:cast({global, name(Dest)}, {hbbft, State#state.id, Msg}) || Dest <- lists:seq(0, State#state.n - 1)],
+    [ global_cast(Dest, {hbbft, State#state.id, Msg}) || Dest <- lists:seq(0, State#state.n - 1)],
     do_send(T, State).
 
 
@@ -190,3 +190,6 @@ maybe_serialize_HBBFT(HBBFT, ToSerialize) ->
         true -> HBBFT;
         false -> element(1, hbbft:serialize(HBBFT, false))
     end.
+
+global_cast(Destination, Message) ->
+    gen_server:cast({global, name(Destination)}, Message).
